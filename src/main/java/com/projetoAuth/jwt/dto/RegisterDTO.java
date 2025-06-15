@@ -1,15 +1,19 @@
 package com.projetoAuth.jwt.dto;
 
-public class AuthenticationDTO {
+import com.projetoAuth.jwt.model.userRole;
+
+public class RegisterDTO {
     private String login;
     private String password;
+    private userRole role;
 
-    public AuthenticationDTO() {
+    public RegisterDTO() {
     }
 
-    public AuthenticationDTO(String login, String password) {
+    public RegisterDTO(String login, String password, userRole role) {
         this.login = login;
         this.password = password;
+        this.role = role;
     }
 
     public String getLogin() {
@@ -26,5 +30,13 @@ public class AuthenticationDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public userRole getRole() {
+        return role;
+    }
+
+    public void setRole(userRole role) {
+        this.role = role;
     }
 }
