@@ -1,4 +1,4 @@
-package com.projetoAuth.jwt.user;
+package com.projetoAuth.jwt.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -1,4 +1,4 @@
-package com.projetoAuth.jwt.user;
+package com.projetoAuth.jwt.model;
 
 public enum userRole {
     ADMIN("admin"),
