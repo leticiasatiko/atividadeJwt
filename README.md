@@ -1,61 +1,127 @@
-# 🎉 Atividade Spring Boot | JWT | MySQL
+# 🛡️ Atividade Spring Boot | JWT | MySQL
 
-> **http://localhost:8080**
+## ⚙️ Configuração do Banco de Dados
 
-## 📌 Endpoints
+1. **Crie um banco de dados no MySQL:**
 
-| Método | URL               | Descrição                        | Roles       | 
-|--------|-------------------|----------------------------------|-------------|
-| POST   | `/auth/register`    | Registro de novo usuário         | Pública     |
-| POST   | `/auth/login`       | Login com retorno de JWT         | Pública     |
-| GET    | `/users/me`         | Perfil do usuário logado         | USER, ADMIN |
-| PUT    | `/users/me`         | Editar o próprio login           | USER, ADMIN |
-| GET    | `/users/list-all`   | Listar todos os usuários         | ADMIN       |
-| GET    | `/users/{id}`       | Visualizar usuário por ID        | ADMIN       |
-| PUT    | `/users/{id}`       | Editar login/role de usuário     | ADMIN       |
-| DELETE | `/users/{id}`       | Deletar usuário por ID           | ADMIN       |
+   ```sql
+   CREATE DATABASE atividadejwt;
+   ```
 
-### Exemplos detalhados de JSON para cada endpoint que requer envio de body
+2. **Atualize o arquivo `src/main/resources/application.properties` com suas credenciais:**
 
-#### Registro de novo usuário  
-**POST** `http://localhost:8080/auth/register`
-```json
-{
-  "login": "teste4",
-  "password": "teste",
-  "role": "ADMIN"
-}
-```
+   ```properties
+   spring.datasource.url=jdbc:mysql://localhost:3306/atividadejwt
+   spring.datasource.username=SEU_USUARIO
+   spring.datasource.password=SUA_SENHA
+   ```
 
-#### Login  
-**POST** `http://localhost:8080/auth/login`
-```json
-{
-  "login": "teste4",
-  "password": "teste"
-}
-```
+---
 
-#### Editar o próprio `perfil  
-**PUT** `http://localhost:8080/users/me`
-```json
-{
-  "login": "usuario_atualizado"
-}
-```
+## 🏗️ Como rodar o projeto
 
-#### Editar perfil de outro usuário  
-**PUT** `http://localhost:8080/users/{id}`
-```json
-{
-  "login": "novo_login",
-  "role": "USER"
-}
-```
+1. **Clone o repositório:**
 
-#### Exemplo do retorno do token
-```json
-{
-    "token": "TOKEN"
-}
-```
+   ```bash
+   git clone https://github.com/leticiasatiko/atividadeJwt.git
+   cd atividadeJwt
+   ```
+
+2. **Compile e rode o projeto:**
+
+   ```bash
+   ./mvnw spring-boot:run
+   # ou
+   mvn spring-boot:run
+   ```
+
+   O servidor estará disponível em [http://localhost:8080](http://localhost:8080)
+
+---
+
+## 📌 Endpoints disponíveis
+
+| Método | URL                          | Descrição                             | Auth necessária |
+|--------|------------------------------|---------------------------------------|-----------------|
+| POST   | `/auth/register`             | Registro de novo usuário              | Não             |
+| POST   | `/auth/login`                | Login e retorna JWT                   | Não             |
+| GET    | `/users/me`                  | Perfil do usuário logado              | Sim             |
+| PUT    | `/users/me`                  | Editar o próprio perfil               | Sim             |
+| GET    | `/users/list-all`            | Listar todos os usuários              | ADMIN           |
+| GET    | `/users/{id}`                | Visualizar usuário por ID             | ADMIN           |
+| PUT    | `/users/{id}`                | Editar login/role de usuário por ID   | ADMIN           |
+| DELETE | `/users/{id}`                | Deletar usuário por ID                | ADMIN           |
+
+---
+
+## 🧪 Testando com o Postman
+
+### 1. **Registro de usuário**
+
+- **Endpoint:** `POST http://localhost:8080/auth/register`
+- **Body (JSON):**
+  ```json
+  {
+    "login": "usuario1",
+    "password": "senha123",
+    "role": "USER"
+  }
+  ```
+
+### 2. **Login**
+
+- **Endpoint:** `POST http://localhost:8080/auth/login`
+- **Body (JSON):**
+  ```json
+  {
+    "login": "usuario1",
+    "password": "senha123"
+  }
+  ```
+- **Resposta esperada:**
+  ```json
+  {
+    "token": "JWT_TOKEN_AQUI"
+  }
+  ```
+
+### 3. **Autenticação nos próximos requests**
+
+- Copie o valor do `token` da resposta do login.
+- Nos próximos endpoints protegidos, adicione um header:
+  ```
+  Authorization: Bearer JWT_TOKEN_AQUI
+  ```
+
+### 4. **Editar o próprio login**
+
+- **Endpoint:** `PUT http://localhost:8080/users/me`
+- **Headers:** Authorization: Bearer {token}
+- **Body (JSON):**
+  ```json
+  {
+    "login": "novo_login"
+  }
+  ```
+
+### 5. **Editar login/role de outro usuário (ADMIN)**
+
+- **Endpoint:** `PUT http://localhost:8080/users/{id}`
+- **Headers:** Authorization: Bearer {token_admin}
+- **Body (JSON):**
+  ```json
+  {
+    "login": "novo_login",
+    "role": "ADMIN"
+  }
+  ```
+
+---
+
+## 📝 Observações
+
+- Sempre envie o token JWT no header `Authorization` para endpoints protegidos.
+- Roles possíveis: `USER` e `ADMIN`.
+- Para testar endpoints ADMIN, registre um usuário com role "ADMIN".
+
+---
