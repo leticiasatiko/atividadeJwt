@@ -34,12 +34,11 @@ public class TokenService {
     public String validateToken(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
-            JWT.require(algorithm)
-                    .withIssuer("auth-api")
+            return JWT.require(algorithm)
+                    .withIssuer("auth0")
                     .build()
                     .verify(token)
                     .getSubject();
-            return "Token válido";
         } catch (JWTVerificationException exception) {
             return null;
         }
