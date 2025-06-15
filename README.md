@@ -1,4 +1,4 @@
-# 🛡️ Atividade Spring Boot | JWT | MySQL
+# 🚀 Atividade Spring Boot | JWT | MySQL
 
 ## ⚙️ Configuração do Banco de Dados
 
