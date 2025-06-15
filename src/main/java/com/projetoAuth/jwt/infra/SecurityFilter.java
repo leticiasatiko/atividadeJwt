@@ -1,6 +1,5 @@
-package com.projetoAuth.jwt.config;
+package com.projetoAuth.jwt.infra;
 
-import com.projetoAuth.jwt.infra.TokenService;
 import com.projetoAuth.jwt.repository.userRepository;
 import com.projetoAuth.jwt.model.userModel;
 import jakarta.servlet.FilterChain;
