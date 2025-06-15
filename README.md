@@ -27,13 +27,7 @@
    cd atividadeJwt
    ```
 
-2. **Compile e rode o projeto:**
-
-   ```bash
-   ./mvnw spring-boot:run
-   # ou
-   mvn spring-boot:run
-   ```
+2. **Compile e rode o projeto**
 
    O servidor estará disponível em [http://localhost:8080](http://localhost:8080)
 
