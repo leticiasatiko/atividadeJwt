@@ -5,6 +5,7 @@ import com.projetoAuth.jwt.dto.LoginResponseDTO;
 import com.projetoAuth.jwt.dto.RegisterDTO;
 import com.projetoAuth.jwt.model.userModel;
 import com.projetoAuth.jwt.repository.userRepository;
+import com.projetoAuth.jwt.infra.TokenService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,11 +30,15 @@ public class AuthenticationController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private TokenService tokenService;
+
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody AuthenticationDTO data) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.getLogin(), data.getPassword());
         var auth  = this.authenticationManager.authenticate(usernamePassword);
-        String token = "TOKEN";
+
+        String token = this.tokenService.generateToken((userModel) auth.getPrincipal());
 
         return ResponseEntity.ok(new LoginResponseDTO(token));
     }
